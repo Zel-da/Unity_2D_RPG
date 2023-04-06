@@ -13,6 +13,7 @@ public class PlayerAction : MonoBehaviour
     float v;
     bool isHorizonMove;
     Vector3 dirVec;
+    GameObject scanObject;
 
     void Awake()
     {
@@ -57,6 +58,9 @@ public class PlayerAction : MonoBehaviour
             dirVec = Vector3.left;
         else if (hDown && h == 1)
             dirVec = Vector3.right;
+
+        if (Input.GetButtonDown("jump") && scanObject != null)
+            Debug.Log("This is : " + scanObject.name);
     }
 
     void FixedUpdate()
@@ -65,5 +69,13 @@ public class PlayerAction : MonoBehaviour
         rigid.velocity = moveVec * Speed;
 
         Debug.DrawRay(rigid.position, dirVec * 0.7f, new Color(0, 1, 0));
+        RaycastHit2D rayhit = Physics2D.Raycast(rigid.position, dirVec, 0.7f,LayerMask.GetMask("Object"));
+
+        if (rayhit.collider != null)
+        {
+            scanObject = rayhit.collider.gameObject;
+        }
+        else
+            scanObject = null;
     }
 }
