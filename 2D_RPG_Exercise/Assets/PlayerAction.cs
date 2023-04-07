@@ -70,11 +70,11 @@ public class PlayerAction : MonoBehaviour
         rigid.velocity = moveVec * Speed;
 
         Debug.DrawRay(rigid.position, dirVec * 0.7f, new Color(0, 1, 0));
-        RaycastHit2D rayhit = Physics2D.Raycast(rigid.position, dirVec, 0.7f,LayerMask.GetMask("Object"));
+        RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, dirVec, 0.7f,LayerMask.GetMask("Object"));
 
-        if (rayhit.collider != null)
+        if (rayHit.collider != null)
         {
-            scanObject = rayhit.collider.gameObject;
+            scanObject = rayHit.collider.gameObject;
         }
         else
             scanObject = null;
