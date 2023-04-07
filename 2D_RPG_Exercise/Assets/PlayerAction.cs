@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour
 {
     public float Speed;
+    public GameManager manager;
 
     Rigidbody2D rigid;
     Animator anim;
@@ -23,13 +24,13 @@ public class PlayerAction : MonoBehaviour
 
     void Update()
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        h = manager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
+        v = manager.isAction ? 0 : Input.GetAxisRaw("Vertical");
 
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
+        bool hDown = manager.isAction ? false : Input.GetButtonDown("Horizontal");
+        bool vDown = manager.isAction ? false : Input.GetButtonDown("Vertical");
+        bool hUp = manager.isAction ? false : Input.GetButtonUp("Horizontal");
+        bool vUp = manager.isAction ? false : Input.GetButtonUp("Vertical");
 
         if (hDown)
             isHorizonMove = true;
@@ -59,8 +60,8 @@ public class PlayerAction : MonoBehaviour
         else if (hDown && h == 1)
             dirVec = Vector3.right;
 
-        if (Input.GetButtonDown("jump") && scanObject != null)
-            Debug.Log("This is : " + scanObject.name);
+        if (Input.GetButtonDown("Jump") && scanObject != null)
+            manager.Action(scanObject);
     }
 
     void FixedUpdate()
